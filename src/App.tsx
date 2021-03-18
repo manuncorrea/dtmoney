@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 
 import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
+import { NewTransactionModal } from './components/NewTransactionModal';
 import { GlobalSytle } from "./styles/global";
 
 //Configurando Modal
@@ -22,12 +23,11 @@ export function App() {
     <>
       <Header onOpenNewTransctionModal={handleOpenTransactionModal} />
       <Dashboard />
-      <Modal 
+      
+      <NewTransactionModal
         isOpen={isNewTransactionModalOpen}
         onRequestClose={handleCloseTransactionModal}
-      >
-         <h2>Cadastrar transction</h2>
-      </Modal>
+       />
       <GlobalSytle />
     </>
   );
