@@ -1,48 +1,60 @@
-import { FormEvent, useState } from 'react';
 import Modal from 'react-modal';
+import { FormEvent, useState } from 'react';
 
+import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
-import closeImg from '../../assets/close.svg';
+
+import { useTransactions } from '../../hooks/useTransactions';
 
 import { Container, TransactionTypeContainer, RadioBox } from './styles';
-import { api } from '../../services/api';
 
-interface NewTransactionModalProps{
+
+interface NewTransactionModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
 }
 
-export function NewTransactionModal({isOpen, onRequestClose }: NewTransactionModalProps) {
+export function NewTransactionModal({ isOpen, onRequestClose }: NewTransactionModalProps) {
+  const { createTransaction } = useTransactions();
+
   const [title, setTitle] = useState('');
-  const [value, setValue] = useState(0);
+  const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
 
   // Alterando a cor de fundo do button
   const [type, setType] = useState('deposit');
 
-  function handleCreateNewTransaction(event: FormEvent) {
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
-    // Salvando os dados na api
-    const data ={
+    await createTransaction({
       title,
-      value,
+      amount,
       category,
-      type
-    };
+      type,
+    })
 
-    api.post('/transactions', data);
+    setTitle('');
+    setAmount(0);
+    setCategory('');
+    setType('deposit');
+
+    onRequestClose();
   }
 
   return(
     <Modal 
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      isOpen={ isOpen }
+      onRequestClose={ onRequestClose }
       overlayClassName="react-modal-overlay"
       className="react-modal-content"
     >
-      <button type="submit" onClick={onRequestClose} className="react-modal-close">
+      <button
+       type="submit" 
+       onClick={onRequestClose}
+       className="react-modal-close"
+       >
         <img src={closeImg} alt="Fechar Modals"/>
       </button>
 
@@ -50,44 +62,42 @@ export function NewTransactionModal({isOpen, onRequestClose }: NewTransactionMod
         <h2>Cadastrar transação</h2>
 
         <input 
-          placeholder="Titulo" 
-          value={title} 
-          onChange={event => setTitle(event.target.value)} // ter acesso ao valor digitado no input
+          placeholder="Título" 
+          value={ title } 
+          onChange={ event => setTitle(event.target.value)} // ter acesso ao valor digitado no input
         />
         <input
           type="number" 
           placeholder="Valor"
-          value={value} 
-          onChange={event => setValue(Number(event.target.value))} // ter acesso ao valor digitado no input
+          value={amount} 
+          onChange={event => setAmount(Number(event.target.value))} // ter acesso ao valor digitado no input
         />
 
         <TransactionTypeContainer>
           <RadioBox 
             type="button" 
-            onClick={() => 
-            setType('deposit')} 
+            onClick={ () => { setType('deposit') }}
             isActive={type === 'deposit'}
             activeColor="green"
           >
-            <img src={incomeImg} alt="Entrada"/>
+            <img src={ incomeImg } alt="Entrada" />
             <span>Entrada</span>
           </RadioBox>
 
           <RadioBox 
             type="button" 
-            onClick={() => 
-            setType('withdraw')}  
+            onClick={ () => { setType('withdraw') }} 
             isActive={type === 'withdraw'}
             activeColor="red"
           >
-            <img src={outcomeImg} alt="Saida"/>
+            <img src={ outcomeImg } alt="Saída" />
             <span>Saída</span>
           </RadioBox>
         </TransactionTypeContainer>
 
         <input 
           placeholder="Categoria"
-          value={category} 
+          value={ category } 
           onChange={event => setCategory(event.target.value)} // ter acesso ao valor digitado no input
         />
         <button type="submit">Cadastrar</button>

@@ -20,7 +20,7 @@ export const GlobalSytle = createGlobalStyle`
 
   html{
     @media(max-width: 1080px) {
-      font-size: 93,75%;
+      font-size: 93.75%;
     }
 
     @media(max-width: 720px) {
@@ -71,7 +71,7 @@ export const GlobalSytle = createGlobalStyle`
     background: var(--background);
     padding: 3rem;
     position: relative;
-    border-radius: 0.24rem;
+    border-radius: 0.25rem;
   }
 
   .react-modal-close{
@@ -83,7 +83,7 @@ export const GlobalSytle = createGlobalStyle`
 
     transition: filter 0.2s;
 
-    &:hover{
+    &:hover {
       filter: brightness(0.8);
     }
   }

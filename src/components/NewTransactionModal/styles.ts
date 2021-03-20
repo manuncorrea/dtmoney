@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { darken, transparentize } from 'polished';
+import styled from 'styled-components';
+import { darken, transparentize } from 'polished'
 
 export const Container = styled.form`
   h2{
@@ -20,7 +20,7 @@ export const Container = styled.form`
     font-weight: 400;
     font-size: 1rem;
 
-    &::placeholder{
+    &::placeholder {
       color: var(--text-body);
     }
 
@@ -41,7 +41,7 @@ export const Container = styled.form`
     margin-top: 1.5rem;
     font-weight: 600;
 
-    transition: 0.2s;
+    transition: filter 0.2s;
 
     &:hover{
       filter: brightness(0.9);
@@ -73,17 +73,15 @@ export const RadioBox = styled.button<RadioBoxProps>`
     border-radius: 0.25rem;
 
     background: ${(props) => props.isActive 
-    ? transparentize(0.9, colors[props.activeColor]) 
-    : 'transparent'
-    };
-
+    ? transparentize(0.9, colors[props.activeColor])
+    : 'transparent'};
     display: flex;
     align-items: center;
     justify-content: center;
 
-    transition: border-color 0.2s;
+    transition: border-color 0.2s ease;
 
-    &:hover{
+    &:hover {
       border-color: ${darken(0.1, '#d7d7d7')};
     }
 

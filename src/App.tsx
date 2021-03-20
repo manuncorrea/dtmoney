@@ -4,7 +4,9 @@ import Modal from 'react-modal';
 import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 import { NewTransactionModal } from './components/NewTransactionModal';
+
 import { GlobalSytle } from "./styles/global";
+import { TransactionProvider } from './hooks/useTransactions';
 
 //Configurando Modal
 Modal.setAppElement('#root');
@@ -20,7 +22,7 @@ export function App() {
     setIsNewTransactionModalOpen(false)
   }
   return (
-    <>
+    <TransactionProvider>
       <Header onOpenNewTransctionModal={handleOpenTransactionModal} />
       <Dashboard />
       
@@ -29,7 +31,7 @@ export function App() {
         onRequestClose={handleCloseTransactionModal}
        />
       <GlobalSytle />
-    </>
+    </TransactionProvider>
   );
 }
 
